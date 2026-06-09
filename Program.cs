@@ -1,37 +1,27 @@
-﻿var course = new Course
+﻿void PrintGradeReport(IEnumerable<IGradable> assessments)
 {
-    Code = "CS-401",
-    Title = "Advanced C#",
-    Capacity = 30
+    Console.WriteLine("--- Grade Report ---");
+
+    foreach (var item in assessments)
+    {
+        Console.WriteLine($"{item.Title}: {item.CalculateGrade():F2}%");
+    }
+}
+
+IGradable[] cohortAssessments =
+{
+    new Quiz
+    {
+        Title = "C# Basics",
+        CorrectAnswers = 18,
+        TotalQuestions = 20
+    },
+    new LabAssignment
+    {
+        Title = "Registration API",
+        FunctionalityScore = 90m,
+        CodeQualityScore = 85m
+    }
 };
 
-Console.WriteLine($"Course: {course.Title} (Capacity: {course.Capacity})");
-
-try
-{
-    course.Capacity = -5;
-}
-catch (ArgumentOutOfRangeException ex)
-{
-    Console.WriteLine($"Caught: {ex.Message}");
-}
-
-try
-{
-    course.Title = "";
-}
-catch (ArgumentException ex)
-{
-    Console.WriteLine($"Caught: {ex.Message}");
-}
-
-// Student test
-var s = new Student
-{
-    Id = "S1",
-    Name = "Abeba",
-    Age = 20,
-    GPA = 3.8m
-};
-
-Console.WriteLine($"Student: {s.Name}, GPA: {s.GPA}");
+PrintGradeReport(cohortAssessments);
